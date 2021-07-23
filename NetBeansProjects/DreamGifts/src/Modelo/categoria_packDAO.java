@@ -14,25 +14,18 @@ import java.util.List;
 import javax.swing.JOptionPane;
 
 
-public class ClienteDAO {
+public class categoria_packDAO {
     Connection con;
     Conexion cn = new Conexion();
     PreparedStatement ps;
     ResultSet res;
     
-    public boolean RegistrarCliente (Cliente rs) {
-        String sql = "INSERT INTO cliente(CLI_RUT, CLI_NOMBRE, CLI_APELLIDO, CLI_DIRECCION, CLI_TELEFONO, CLI_CORREO) VALUES (?,?,?,?,?,?)";
+    public boolean Registrarcategoria_pack(categoria_pack cv) {
+        String sql = "INSERT INTO categoria_pack(CATPACK_DESCRIPCION) VALUES (?)";
         try {
             con = cn.getConnection();
             ps = con.prepareStatement(sql);
-            ps.setInt(1, rs.getCLI_RUT());
-            ps.setString(2, rs.getCLI_NOMBRE());
-            ps.setString(3, rs.getCLI_APELLIDO());
-            ps.setString(4, rs.getCLI_DIRECCION());
-            ps.setInt(5, rs.getCLI_TELEFONO());
-            ps.setString(6, rs.getCLI_CORREO());
-            
-            
+            ps.setString(1, cv.getCATPACK_DESCRIPCION());
             ps.execute();
             return true;
             
@@ -48,42 +41,32 @@ public class ClienteDAO {
         }
     }
     
-    public List ListarCliente(){
-        List<Cliente> ListaRs = new ArrayList();
-        String sql = "SELECT * FROM cliente";
+    public List Listarcategoria_pack(){
+        List<categoria_pack> ListaCv = new ArrayList();
+        String sql = "SELECT * FROM categoria_pack";
         try {
             con = cn.getConnection();
             ps = con.prepareStatement(sql);
             res = ps.executeQuery();
             while (res.next()){
-                Cliente rs = new Cliente();
-                rs.setCLI_ID_CLIENTE (res.getInt("CLI_ID_CLIENTE "));
-                rs.setCLI_RUT(res.getInt("CLI_RUT"));
-                rs.setCLI_NOMBRE(res.getString("CLI_NOMBRE"));
-                rs.setCLI_APELLIDO(res.getString("CLI_APELLIDO"));
-                rs.setCLI_DIRECCION(res.getString("CLI_DIRECCION"));
-                
-                rs.setCLI_TELEFONO(res.getInt("CLI_TELEFONO"));
-                rs.setCLI_CORREO(res.getString("CLI_CORREO"));
-                
-                
-                
-                ListaRs.add(rs);
+                categoria_pack catpack = new categoria_pack();
+                catpack.setID_CATEGORIAPACK(res.getInt("ID_CATEGORIAPACK"));
+                catpack.setCATPACK_DESCRIPCION(res.getString("CATPACK_DESCRIPCION"));
+                ListaCv.add(catpack);
             }
             
         } catch (SQLException e){
             System.out.println(e.toString());
         }
-        return ListaRs;
+        return ListaCv;
     }
     
-    public boolean EliminarCliente (int CLI_ID_CLIENTE){
-        String sql = "DELETE FROM cliente WHERE CLI_ID_CLIENTE = ?";
+    public boolean Eliminarcategoria_pack(int ID_CATEGORIAPACK){
+        String sql = "DELETE FROM categoria_pack WHERE ID_CATEGORIAPACK = ?";
         
         try {
             ps = con.prepareStatement(sql);
-           
-            ps.setInt(1, CLI_ID_CLIENTE);
+            ps.setInt(1, ID_CATEGORIAPACK);
             ps.execute();
             return true;
         } catch (SQLException e){
@@ -98,13 +81,13 @@ public class ClienteDAO {
         }
     }
     
-    public boolean EditarCliente (Cliente rs) {
-        String sql = "UPDATE cliente SET CLI_NOMBRE=? WHERE CLI_ID_CLIENTE=?";
+    public boolean Editarcategoria_pack(categoria_pack catpack) {
+        String sql = "UPDATE categoria_pack SET CATPACK_DESCRIPCION=? WHERE ID_CATEGORIAPACK=?";
         try {
             
             ps = con.prepareStatement(sql);
-            ps.setString(1, rs.getCLI_NOMBRE());
-            ps.setInt(2, rs.getCLI_ID_CLIENTE ());
+            ps.setString(1, catpack.getCATPACK_DESCRIPCION());
+            ps.setInt(2, catpack.getID_CATEGORIAPACK());
             ps.execute();
             return true;
             

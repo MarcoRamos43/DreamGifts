@@ -12,27 +12,20 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
-
-
-public class ClienteDAO {
+ 
+public class bancosDAO {
+    
     Connection con;
     Conexion cn = new Conexion();
     PreparedStatement ps;
     ResultSet res;
     
-    public boolean RegistrarCliente (Cliente rs) {
-        String sql = "INSERT INTO cliente(CLI_RUT, CLI_NOMBRE, CLI_APELLIDO, CLI_DIRECCION, CLI_TELEFONO, CLI_CORREO) VALUES (?,?,?,?,?,?)";
+public boolean RegistrarBancos(bancos rs) {
+        String sql = "INSERT INTO bancos(BAN_DESCRIPCION) VALUES (?)";
         try {
             con = cn.getConnection();
             ps = con.prepareStatement(sql);
-            ps.setInt(1, rs.getCLI_RUT());
-            ps.setString(2, rs.getCLI_NOMBRE());
-            ps.setString(3, rs.getCLI_APELLIDO());
-            ps.setString(4, rs.getCLI_DIRECCION());
-            ps.setInt(5, rs.getCLI_TELEFONO());
-            ps.setString(6, rs.getCLI_CORREO());
-            
-            
+            ps.setString(1, rs.getBAN_DESCRIPCION());
             ps.execute();
             return true;
             
@@ -48,26 +41,17 @@ public class ClienteDAO {
         }
     }
     
-    public List ListarCliente(){
-        List<Cliente> ListaRs = new ArrayList();
-        String sql = "SELECT * FROM cliente";
+    public List ListarBancos(){
+        List<bancos> ListaRs = new ArrayList();
+        String sql = "SELECT * FROM bancos";
         try {
             con = cn.getConnection();
             ps = con.prepareStatement(sql);
             res = ps.executeQuery();
             while (res.next()){
-                Cliente rs = new Cliente();
-                rs.setCLI_ID_CLIENTE (res.getInt("CLI_ID_CLIENTE "));
-                rs.setCLI_RUT(res.getInt("CLI_RUT"));
-                rs.setCLI_NOMBRE(res.getString("CLI_NOMBRE"));
-                rs.setCLI_APELLIDO(res.getString("CLI_APELLIDO"));
-                rs.setCLI_DIRECCION(res.getString("CLI_DIRECCION"));
-                
-                rs.setCLI_TELEFONO(res.getInt("CLI_TELEFONO"));
-                rs.setCLI_CORREO(res.getString("CLI_CORREO"));
-                
-                
-                
+                bancos rs = new bancos();
+                rs.setBAN_ID_BANCO(res.getInt("BAN_ID_BANCO"));
+                rs.setBAN_DESCRIPCION(res.getString("BAN_DESCRIPCION"));
                 ListaRs.add(rs);
             }
             
@@ -77,13 +61,12 @@ public class ClienteDAO {
         return ListaRs;
     }
     
-    public boolean EliminarCliente (int CLI_ID_CLIENTE){
-        String sql = "DELETE FROM cliente WHERE CLI_ID_CLIENTE = ?";
+    public boolean EliminarBancos(int BAN_ID_BANCO){
+        String sql = "DELETE FROM bancos WHERE BAN_ID_BANCO = ?";
         
         try {
             ps = con.prepareStatement(sql);
-           
-            ps.setInt(1, CLI_ID_CLIENTE);
+            ps.setInt(1, BAN_ID_BANCO);
             ps.execute();
             return true;
         } catch (SQLException e){
@@ -98,13 +81,13 @@ public class ClienteDAO {
         }
     }
     
-    public boolean EditarCliente (Cliente rs) {
-        String sql = "UPDATE cliente SET CLI_NOMBRE=? WHERE CLI_ID_CLIENTE=?";
+    public boolean EditarBancos (bancos rs) {
+        String sql = "UPDATE bancos SET BAN_DESCRIPCION=? WHERE BAN_ID_BANCO=?";
         try {
             
             ps = con.prepareStatement(sql);
-            ps.setString(1, rs.getCLI_NOMBRE());
-            ps.setInt(2, rs.getCLI_ID_CLIENTE ());
+            ps.setString(1, rs.getBAN_DESCRIPCION());
+            ps.setInt(2, rs.getBAN_ID_BANCO());
             ps.execute();
             return true;
             
@@ -120,3 +103,4 @@ public class ClienteDAO {
         }
     }
 }
+

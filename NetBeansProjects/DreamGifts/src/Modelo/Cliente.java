@@ -9,9 +9,12 @@ package Modelo;
  *
  * @author Usuario
  */
-public class Cliente {
+
+    
+    public class Cliente {
     
     private int CLI_ID_CLIENTE;
+    private int CLI_RUT;
     private String CLI_NOMBRE;
     private String CLI_APELLIDO;
     private String CLI_DIRECCION;
@@ -21,8 +24,9 @@ public class Cliente {
     public Cliente() {
     }
 
-    public Cliente(int CLI_ID_CLIENTE, String CLI_NOMBRE, String CLI_APELLIDO, String CLI_DIRECCION, int CLI_TELEFONO, String CLI_CORREO) {
+    public Cliente(int CLI_ID_CLIENTE, int CLI_RUT, String CLI_NOMBRE, String CLI_APELLIDO, String CLI_DIRECCION, int CLI_TELEFONO, String CLI_CORREO) {
         this.CLI_ID_CLIENTE = CLI_ID_CLIENTE;
+        this.CLI_RUT = CLI_RUT;
         this.CLI_NOMBRE = CLI_NOMBRE;
         this.CLI_APELLIDO = CLI_APELLIDO;
         this.CLI_DIRECCION = CLI_DIRECCION;
@@ -36,6 +40,14 @@ public class Cliente {
 
     public void setCLI_ID_CLIENTE(int CLI_ID_CLIENTE) {
         this.CLI_ID_CLIENTE = CLI_ID_CLIENTE;
+    }
+
+    public int getCLI_RUT() {
+        return CLI_RUT;
+    }
+
+    public void setCLI_RUT(int CLI_RUT) {
+        this.CLI_RUT = CLI_RUT;
     }
 
     public String getCLI_NOMBRE() {
@@ -77,7 +89,7 @@ public class Cliente {
     public void setCLI_CORREO(String CLI_CORREO) {
         this.CLI_CORREO = CLI_CORREO;
     }
-    
-    
-    
+
 }
+    
+
