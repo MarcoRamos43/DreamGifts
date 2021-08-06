@@ -19,47 +19,47 @@ import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 
-public class ComunaDAO{
+public class estados_ventaDAO{
     
     Connection con;
     PreparedStatement ps;
     ResultSet rs;
     Conexion cn = new Conexion();
-    public void insertarComuna (String nombreComuna, String estadoComuna){
+    public void insertarEstado (String nombreEstado, String estadoEstado){
        // Usuario l = new Usuario();
         
-        String sql = "insert into comunas (COM_DESCRIPCION, COM_ESTADO) values(?,?)";
+        String sql = "insert into estados_venta (EST_DESCRIPCION, EST_ESTADO) values(?,?)";
         try{
             con = cn.getConnection();
             ps = con.prepareStatement(sql);
-            ps.setString(1, nombreComuna);
-            ps.setString(2, estadoComuna);
+            ps.setString(1, nombreEstado);
+            ps.setString(2, estadoEstado);
             ps.execute();
             
-            JOptionPane.showMessageDialog(null, "Registro Comuna Exitoso");
+            JOptionPane.showMessageDialog(null, "Registro de estado de la venta Exitoso");
             ps.close();
             con.close();
         } catch (SQLException e){
             //System.out.println(e.toString());
-            JOptionPane.showMessageDialog(null, "Error de Registro de Comuna"+e.getMessage());
+            JOptionPane.showMessageDialog(null, "Error de Registro del estado de la venta"+e.getMessage());
         }
        // return l;
     }
     
    
-    public ArrayList<Comuna> mostrarComuna(){
-       ArrayList mostrarComuna = new ArrayList();
-       Comuna comuna;
+    public ArrayList<estados_venta> mostrarEstado(){
+       ArrayList mostrarEstado = new ArrayList();
+       estados_venta estado;
         try{
             con = cn.getConnection();
-            ps = con.prepareStatement("SELECT * FROM comunas");
+            ps = con.prepareStatement("SELECT * FROM estados_venta");
             rs = ps.executeQuery();
            while (rs.next()){  
-              comuna = new Comuna(); 
-              comuna.setIdComuna(rs.getInt(1));
-              comuna.setNombreComuna(rs.getString(2));
-              comuna.setEstadoComuna(rs.getString(3));
-           mostrarComuna.add(comuna);
+              estado = new estados_venta(); 
+              estado.setIdestados(rs.getInt(1));
+              estado.setNombreEstado(rs.getString(2));
+              estado.setEstadoEstado(rs.getString(3));
+           mostrarEstado.add(estado);
            
            }    
             ps.close();
@@ -67,15 +67,15 @@ public class ComunaDAO{
         } catch (SQLException e){
             JOptionPane.showMessageDialog(null, "Error al mostrar Datos"+ e.getMessage());
         }
-        return mostrarComuna;
+        return mostrarEstado;
     }
     
-        public void modificarComuna(Comuna c){
+        public void modificarEstado(estados_venta ev){
         try{
-            int ID = c.getIdComuna();
-            String Nombre = c.getNombreComuna();
-            String Estado = c.getEstadoComuna();
-            String sql = "update comunas set COM_DESCRIPCION=?, COM_ESTADO=? where COM_ID_COMUNA=?";
+            int ID = ev.getIdestados();
+            String Nombre = ev.getNombreEstado();
+            String Estado = ev.getEstadoEstado();
+            String sql = "update estados_venta set EST_DESCRIPCION=?, EST_ESTADO=? where EST_ID_ESTADO =?";
             con = cn.getConnection();
             ps = con.prepareStatement(sql);
             ps.setString(1,Nombre);
@@ -92,17 +92,17 @@ public class ComunaDAO{
     }
     
 
-    public Comuna leerComuna(int idComuna){
-         Comuna com= new Comuna();
+    public estados_venta leerEstado(int idEstado){
+         estados_venta com= new estados_venta();
         try{
             con = cn.getConnection();
-            ps = con.prepareStatement("SELECT * FROM comunas where COM_ID_COMUNA=?");
-            ps.setInt(1, idComuna);
+            ps = con.prepareStatement("SELECT * FROM estados_venta where EST_ID_ESTADO =?");
+            ps.setInt(1, idEstado);
             rs = ps.executeQuery();
            while (rs.next()){  
-              com.setIdComuna(rs.getInt(1));
-              com.setNombreComuna(rs.getString(2));
-              com.setEstadoComuna(rs.getString(3));
+              com.setIdestados(rs.getInt(1));
+              com.setNombreEstado(rs.getString(2));
+              com.setEstadoEstado(rs.getString(3));
            }    
             ps.close();
             con.close();
@@ -113,3 +113,4 @@ public class ComunaDAO{
     }
 
 }
+

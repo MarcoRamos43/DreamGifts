@@ -15,13 +15,15 @@ public class Cliente {
     private String nombreCliente;
     private String rutCliente;
     private String fechaNacimientoCliente;
-    private int telefonoCliente;
+    private String telefonoCliente;
     private String correoCliente;
-    private String redSocialCliente;
+    private int redSocialCliente;
     private String direccionCliente;
     private String estadoCliente;
 
-    public Cliente(int idCliente, String nombreCliente, String rutCliente, String fechaNacimientoCliente, int telefonoCliente, String correoCliente, String redSocialCliente, String direccionCliente, String estadoCliente) {
+     public Cliente() {
+    }
+    public Cliente(int idCliente, String nombreCliente, String rutCliente, String fechaNacimientoCliente, String telefonoCliente, String correoCliente, int redSocialCliente, String direccionCliente, String estadoCliente) {
         this.idCliente = idCliente;
         this.nombreCliente = nombreCliente;
         this.rutCliente = rutCliente;
@@ -65,11 +67,11 @@ public class Cliente {
         this.fechaNacimientoCliente = fechaNacimientoCliente;
     }
 
-    public int getTelefonoCliente() {
+    public String getTelefonoCliente() {
         return telefonoCliente;
     }
 
-    public void setTelefonoCliente(int telefonoCliente) {
+    public void setTelefonoCliente(String telefonoCliente) {
         this.telefonoCliente = telefonoCliente;
     }
 
@@ -81,11 +83,11 @@ public class Cliente {
         this.correoCliente = correoCliente;
     }
 
-    public String getRedSocialCliente() {
+    public int getRedSocialCliente() {
         return redSocialCliente;
     }
 
-    public void setRedSocialCliente(String redSocialCliente) {
+    public void setRedSocialCliente(int redSocialCliente) {
         this.redSocialCliente = redSocialCliente;
     }
 

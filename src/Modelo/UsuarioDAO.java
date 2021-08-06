@@ -22,8 +22,8 @@ public class UsuarioDAO{
     PreparedStatement ps;
     ResultSet rs;
     Conexion cn = new Conexion();
-    String estadoUsuario1 = "Activo";
-    public void insertarUsuario (String nombreUsuario, String passUsuario, String correoUsuario){
+
+    public void insertarUsuario (String nombreUsuario, String passUsuario, String correoUsuario, String estadoUsuario){
        // Usuario l = new Usuario();
         
         String sql = "insert into usuarios (USU_NOMBRE, USU_CLAVE, USU_EMAIL, USU_ESTADO ) values(?,?,?,?)";
@@ -33,10 +33,12 @@ public class UsuarioDAO{
             ps.setString(1, nombreUsuario);
             ps.setString(2, passUsuario);
             ps.setString(3, correoUsuario);
-            ps.setString(4,estadoUsuario1);
+            ps.setString(4,estadoUsuario);
             ps.execute();
             
             JOptionPane.showMessageDialog(null, "Registro Exitoso");
+            ps.close();
+            con.close();    
         } catch (SQLException e){
             //System.out.println(e.toString());
             JOptionPane.showMessageDialog(null, "Error de Registros"+e.getMessage());
@@ -62,7 +64,8 @@ public class UsuarioDAO{
            mostrarUsuario.add(usuario);
            
            }    
-            
+            ps.close();
+            con.close();
         } catch (SQLException e){
             JOptionPane.showMessageDialog(null, "Error al mostrar Datos"+ e.getMessage());
         }
@@ -87,32 +90,13 @@ public class UsuarioDAO{
             ps.setInt(5,ID);
             ps.execute();
             JOptionPane.showMessageDialog(null, "Registro Editado Exitoso"); 
-            
+            ps.close();
+            con.close();
         } catch (SQLException e){
            JOptionPane.showMessageDialog(null, "Error en edición de Registros"+e.getMessage());  
         }
     }
-    
-     public void modificarEstadoUsuario(Usuario u){
-        try{
-            int ID = u.getIdUsuario();
-            //String Clave = u.getPassUsuario();
-            //String Correo = u.getCorreoUsuario();
-            String Estado = "Inactivo"; 
-            String sql = "update usuarios set USU_ESTADO=? where USU_ID_USUARIO=?";
-            con = cn.getConnection();
-            ps = con.prepareStatement(sql);
-            ps.setString(1,Estado);
-          //  ps.setString (3,u.getValidarPassUsuario());
-            ps.setInt(2,ID);
-            ps.execute();
-            JOptionPane.showMessageDialog(null, "Usuario Desactivado de manera Exitosa"); 
-            
-        } catch (SQLException e){
-           JOptionPane.showMessageDialog(null, "Error en desactivacion de Usuario"+e.getMessage());  
-        }
-    }
-   
+       
        public Usuario leerUsuario(int idUsuario){
        Usuario us= new Usuario();
         try{
@@ -127,7 +111,8 @@ public class UsuarioDAO{
               us.setCorreoUsuario(rs.getString(4));
               us.setEstadoUsuario(rs.getString(5));
            }    
-            
+            ps.close();
+            con.close();
         } catch (SQLException e){
             JOptionPane.showMessageDialog(null, "Error al leer Usuario"+ e.getMessage());
         }

@@ -19,47 +19,47 @@ import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 
-public class ComunaDAO{
+public class bancosDAO{
     
     Connection con;
     PreparedStatement ps;
     ResultSet rs;
     Conexion cn = new Conexion();
-    public void insertarComuna (String nombreComuna, String estadoComuna){
+    public void insertarBancos (String nombreBancos, String estadoBancos){
        // Usuario l = new Usuario();
         
-        String sql = "insert into comunas (COM_DESCRIPCION, COM_ESTADO) values(?,?)";
+        String sql = "insert into bancos (BAN_DESCRIPCION, BAN_ESTADO) values(?,?)";
         try{
             con = cn.getConnection();
             ps = con.prepareStatement(sql);
-            ps.setString(1, nombreComuna);
-            ps.setString(2, estadoComuna);
+            ps.setString(1, nombreBancos);
+            ps.setString(2, estadoBancos);
             ps.execute();
             
-            JOptionPane.showMessageDialog(null, "Registro Comuna Exitoso");
+            JOptionPane.showMessageDialog(null, "Registro Banco Exitoso");
             ps.close();
             con.close();
         } catch (SQLException e){
             //System.out.println(e.toString());
-            JOptionPane.showMessageDialog(null, "Error de Registro de Comuna"+e.getMessage());
+            JOptionPane.showMessageDialog(null, "Error de Registro de Banco"+e.getMessage());
         }
        // return l;
     }
     
    
-    public ArrayList<Comuna> mostrarComuna(){
-       ArrayList mostrarComuna = new ArrayList();
-       Comuna comuna;
+    public ArrayList<bancos> mostrarBancos(){
+       ArrayList mostrarBancos = new ArrayList();
+       bancos banco;
         try{
             con = cn.getConnection();
-            ps = con.prepareStatement("SELECT * FROM comunas");
+            ps = con.prepareStatement("SELECT * FROM bancos");
             rs = ps.executeQuery();
            while (rs.next()){  
-              comuna = new Comuna(); 
-              comuna.setIdComuna(rs.getInt(1));
-              comuna.setNombreComuna(rs.getString(2));
-              comuna.setEstadoComuna(rs.getString(3));
-           mostrarComuna.add(comuna);
+              banco = new bancos(); 
+              banco.setIdBancos(rs.getInt(1));
+              banco.setNombreBancos(rs.getString(2));
+              banco.setEstadoBancos(rs.getString(3));
+           mostrarBancos.add(banco);
            
            }    
             ps.close();
@@ -67,15 +67,15 @@ public class ComunaDAO{
         } catch (SQLException e){
             JOptionPane.showMessageDialog(null, "Error al mostrar Datos"+ e.getMessage());
         }
-        return mostrarComuna;
+        return mostrarBancos;
     }
     
-        public void modificarComuna(Comuna c){
+        public void modificarBancos(bancos b){
         try{
-            int ID = c.getIdComuna();
-            String Nombre = c.getNombreComuna();
-            String Estado = c.getEstadoComuna();
-            String sql = "update comunas set COM_DESCRIPCION=?, COM_ESTADO=? where COM_ID_COMUNA=?";
+            int ID = b.getIdBancos();
+            String Nombre = b.getNombreBancos();
+            String Estado = b.getEstadoBancos();
+            String sql = "update bancos set BAN_DESCRIPCION=?, BAN_ESTADO=? where BAN_ID_BANCO=?";
             con = cn.getConnection();
             ps = con.prepareStatement(sql);
             ps.setString(1,Nombre);
@@ -92,22 +92,22 @@ public class ComunaDAO{
     }
     
 
-    public Comuna leerComuna(int idComuna){
-         Comuna com= new Comuna();
+    public bancos leerBancos(int idBancos){
+         bancos com= new bancos();
         try{
             con = cn.getConnection();
-            ps = con.prepareStatement("SELECT * FROM comunas where COM_ID_COMUNA=?");
-            ps.setInt(1, idComuna);
+            ps = con.prepareStatement("SELECT * FROM bancos where BAN_ID_BANCO=?");
+            ps.setInt(1, idBancos);
             rs = ps.executeQuery();
            while (rs.next()){  
-              com.setIdComuna(rs.getInt(1));
-              com.setNombreComuna(rs.getString(2));
-              com.setEstadoComuna(rs.getString(3));
+              com.setIdBancos(rs.getInt(1));
+              com.setNombreBancos(rs.getString(2));
+              com.setEstadoBancos(rs.getString(3));
            }    
             ps.close();
             con.close();
         } catch (SQLException e){
-            JOptionPane.showMessageDialog(null, "Error al leer Comuna"+ e.getMessage());
+            JOptionPane.showMessageDialog(null, "Error al leer Bancos"+ e.getMessage());
         }
         return com;
     }
